@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="darkgery">#797979</color>
+    <color name="trangery">#512e2e2e</color>
+
+    <color name="ZhihuBlue">#147eff</color>
+    <color name="GankGreen">#00a754</color>
+    <color name="VideoPink">#ff5c93</color>
+</resources>
