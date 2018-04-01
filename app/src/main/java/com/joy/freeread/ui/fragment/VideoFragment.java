@@ -26,6 +26,7 @@ public class VideoFragment extends BaseFragment {
     RecyclerView mRecyclerview;
     private VideoAdapter mVideoAdapter;
     private LinearLayoutManager mLayoutManager;
+    private VideoPresenter mVideoPresenter;
 
     @Override
     public int getLayoutId() {
@@ -39,13 +40,16 @@ public class VideoFragment extends BaseFragment {
 
     private void loadData() {
         mVideoAdapter = new VideoAdapter(getContext());
-
+        //创建默认的线性LayoutManager
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerview.setLayoutManager(mLayoutManager);
-        
-        VideoPresenter videoPresenter = new VideoPresenter(mVideoAdapter, getContext());
+        //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
+        mRecyclerview.setHasFixedSize(true);
+
+        mVideoPresenter = new VideoPresenter(mVideoAdapter, getContext());
         mRecyclerview.setAdapter(mVideoAdapter);
-        videoPresenter.getFirstPage();
+        mVideoPresenter.getFirstPage();
+
     }
 
 

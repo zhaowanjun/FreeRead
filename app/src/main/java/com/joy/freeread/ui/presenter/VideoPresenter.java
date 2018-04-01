@@ -40,10 +40,11 @@ public class VideoPresenter extends BasePresenter {
                 List<ItemListBean> data = new ArrayList<>();
                 for (IssueListBean issueListBean : issueList) {
                     List<ItemListBean> itemList = issueListBean.getItemList();
-                    for (int i = 1; i < itemList.size(); i++) {
+                    for (int i = 2; i < itemList.size(); i++) {
                         data.add(itemList.get(i));
                     }
                 }
+
                 mVideoAdapter.setData(data);
                 mVideoAdapter.notifyDataSetChanged();
             }

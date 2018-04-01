@@ -4,9 +4,9 @@ package com.joy.freeread.bean.video;
  * Created by admin on 2018/3/29.
  */
 public class ItemListBean {
-
+    
     private String type;
-    private DataListBean dataList;
+    private DataBean data;
     private Object tag;
     private int id;
     private int adIndex;
@@ -19,12 +19,12 @@ public class ItemListBean {
         this.type = type;
     }
 
-    public DataListBean getDataList() {
-        return dataList;
+    public DataBean getData() {
+        return data;
     }
 
-    public void setDataList(DataListBean data) {
-        this.dataList = data;
+    public void setData(DataBean data) {
+        this.data = data;
     }
 
     public Object getTag() {
@@ -50,5 +50,4 @@ public class ItemListBean {
     public void setAdIndex(int adIndex) {
         this.adIndex = adIndex;
     }
-
 }

@@ -2,6 +2,7 @@ package com.joy.freeread.ui.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -31,7 +32,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         //加载布局文件
-        View inflate = View.inflate(mContext, R.layout.video_item, null);
+        View inflate = LayoutInflater.from(mContext).inflate(R.layout.video_item, parent, false);
         ViewHolder viewHolder = new ViewHolder(inflate);
         return viewHolder;
     }
@@ -39,13 +40,19 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         //将数据填充到具体的view中
-        String feedUrl = mData.get(position).getDataList().getData().getCover().getFeed();
-        Glide.with(mContext).load(feedUrl).into(holder.videoImage);
+        if(mData != null && mData.size()>0) {
+            String feedUrl = mData.get(position).getData().getCover().getFeed();
+            System.out.println("======="+feedUrl);
+            Glide.with(mContext).load(feedUrl).into(holder.videoImage);
+        }
     }
 
     @Override
     public int getItemCount() {
-        return mData.size();
+        if(mData != null && mData.size()>0) {
+            return  mData.size();
+        }
+        return 0;
     }
 
 
