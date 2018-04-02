@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.joy.freeread.R;
+import com.joy.freeread.bean.video.DataBean;
 import com.joy.freeread.ui.adapter.VideoAdapter;
 import com.joy.freeread.ui.base.BaseFragment;
 import com.joy.freeread.ui.presenter.VideoPresenter;
@@ -36,6 +37,7 @@ public class VideoFragment extends BaseFragment {
     @Override
     protected void initView(View view) {
         loadData();
+        initItemClickListener();
     }
 
     private void loadData() {
@@ -49,9 +51,17 @@ public class VideoFragment extends BaseFragment {
         mVideoPresenter = new VideoPresenter(mVideoAdapter, getContext());
         mRecyclerview.setAdapter(mVideoAdapter);
         mVideoPresenter.getFirstPage();
-
     }
 
+    private void initItemClickListener() {
+        mVideoAdapter.setOnItemClickListener(new VideoAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(DataBean data) {
+                //打开视频播放页
+                mVideoPresenter.openVideoPlayer(data);
+            }
+        });
+    }
 
     @Override
     public String getName() {

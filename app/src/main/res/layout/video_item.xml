@@ -1,10 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+              android:layout_height="wrap_content" >
 
     <ImageView
         android:id="@+id/video_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/video_cover_color"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/ImageFront"/>
+
+    <TextView
+        android:id="@+id/video_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="22dp"
+        android:layout_gravity="bottom"
+        android:text="标题"
+        android:textSize="14sp"
+        android:textColor="@android:color/white"/>
+
+    <TextView
+        android:id="@+id/video_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="5dp"
+        android:layout_gravity="bottom"
+        android:text="分类"
+        android:textSize="11sp"
+        android:textColor="@android:color/white"/>
+
+    <TextView
+        android:id="@+id/video_duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="5dp"
+        android:layout_gravity="bottom|right"
+        android:text="时长"
+        android:textSize="10sp"
+        android:textColor="@android:color/white"/>
 </FrameLayout>
