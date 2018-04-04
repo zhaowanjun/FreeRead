@@ -1,7 +1,9 @@
 package com.joy.freeread.ui.activity;
 
 import android.content.Intent;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -17,6 +19,10 @@ import butterknife.Bind;
 public class VideoPlayerAvtivity extends BaseActivity {
     @Bind(R.id.video_view)
     VideoView mVideoView;
+    @Bind(R.id.video_cover)
+    ImageView mVideoCover;
+    @Bind(R.id.video_frame)
+    FrameLayout mVideoFrame;
     @Bind(R.id.iv_background)
     ImageView mIvBackground;
     @Bind(R.id.tv_title)
@@ -31,26 +37,24 @@ public class VideoPlayerAvtivity extends BaseActivity {
     private String mTitle;
     private String mSlogan;
     private String mDescription;
+    private int mCurrentPosition;
+    private String mFeedUrl;
 
     @Override
     protected void initView() {
         getIntentData();
-        initVideoPlayer();
         initVideoInfo();
+        initVideoPlayer();
     }
 
     private void getIntentData() {
         Intent intent = getIntent();
+        mFeedUrl = intent.getStringExtra("feedUrl");
         mPlayUrl = intent.getStringExtra("playUrl");
         mBlurred = intent.getStringExtra("blurred");
         mTitle = intent.getStringExtra("title");
         mSlogan = intent.getStringExtra("slogan");
         mDescription = intent.getStringExtra("description");
-    }
-
-    private void initVideoPlayer() {
-        mVideoView.setVideoPath(mPlayUrl);
-        mVideoView.start();
     }
 
     private void initVideoInfo() {
@@ -68,9 +72,35 @@ public class VideoPlayerAvtivity extends BaseActivity {
         mTvDescription.setText(mDescription);
     }
 
+    private void initVideoPlayer() {
+        //添加视频封面图
+        Glide.with(this)
+                .load(mFeedUrl)
+                .centerCrop()
+                .into(mVideoCover);
+        mVideoView.setVideoPath(mPlayUrl);
+        final MediaController mediaController = new MediaController(this);
+        mVideoView.setMediaController(mediaController);
+        mediaController.hide();
+        mVideoView.start();
+    }
+
     @Override
     public int getContentViewId() {
         return R.layout.activity_video_player;
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mVideoView.pause();
+        mCurrentPosition = mVideoView.getCurrentPosition();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        mVideoView.seekTo(mCurrentPosition);
+        mVideoView.start();
+    }
 }

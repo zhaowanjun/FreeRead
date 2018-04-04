@@ -4,10 +4,20 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <VideoView
-        android:id="@+id/video_view"
+    <FrameLayout
+        android:id="@+id/video_frame"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <ImageView
+            android:id="@+id/video_cover"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <VideoView
+            android:id="@+id/video_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </FrameLayout>
 
     <FrameLayout
         android:layout_width="match_parent"

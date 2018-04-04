@@ -2,8 +2,6 @@ package com.joy.freeread.ui.presenter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 
 import com.joy.freeread.bean.video.DataBean;
 import com.joy.freeread.bean.video.IssueListBean;
@@ -13,7 +11,6 @@ import com.joy.freeread.ui.activity.VideoPlayerAvtivity;
 import com.joy.freeread.ui.adapter.VideoAdapter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
@@ -63,6 +60,7 @@ public class VideoPresenter extends BasePresenter {
 
     public void openVideoPlayer(DataBean data) {
         Intent intent = new Intent(mContext, VideoPlayerAvtivity.class);
+        intent.putExtra("feedUrl", data.getCover().getFeed());
         intent.putExtra("playUrl", data.getPlayUrl());
         intent.putExtra("blurred", data.getCover().getBlurred());
         intent.putExtra("title", data.getTitle());
