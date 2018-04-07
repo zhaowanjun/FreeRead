@@ -1,15 +1,21 @@
 package com.joy.freeread.ui.activity;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.media.MediaPlayer;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
 import com.joy.freeread.R;
 import com.joy.freeread.ui.base.BaseActivity;
+import com.joy.freeread.ui.view.VideoController;
 
 import butterknife.Bind;
 
@@ -39,6 +45,9 @@ public class VideoPlayerAvtivity extends BaseActivity {
     private String mDescription;
     private int mCurrentPosition;
     private String mFeedUrl;
+    private int mVideoPortraitHeight;
+    private ViewGroup.LayoutParams mVideoFramelayoutParams;
+    private Button mBtnSwitch;
 
     @Override
     protected void initView() {
@@ -61,7 +70,6 @@ public class VideoPlayerAvtivity extends BaseActivity {
         //添加模糊背景
         Glide.with(this)
                 .load(mBlurred)
-                .centerCrop()
                 .into(mIvBackground);
 
         //添加视频标题
@@ -73,16 +81,27 @@ public class VideoPlayerAvtivity extends BaseActivity {
     }
 
     private void initVideoPlayer() {
+        mVideoFramelayoutParams = mVideoFrame.getLayoutParams();
+        //储存竖屏时视频的高度
+        mVideoPortraitHeight = mVideoFramelayoutParams.height;
         //添加视频封面图
         Glide.with(this)
                 .load(mFeedUrl)
-                .centerCrop()
                 .into(mVideoCover);
         mVideoView.setVideoPath(mPlayUrl);
-        final MediaController mediaController = new MediaController(this);
-        mVideoView.setMediaController(mediaController);
-        mediaController.hide();
-        mVideoView.start();
+        VideoController videoController = new VideoController
+                (this, this, mVideoView, mVideoFramelayoutParams, mVideoPortraitHeight);
+        mBtnSwitch = (Button) videoController.findViewById(R.id.btn_switch);
+        mVideoView.setMediaController(videoController);
+        //监听视频准备完成
+        mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mVideoCover.setVisibility(View.GONE);
+                mVideoView.start();
+            }
+        });
+
     }
 
     @Override
@@ -102,5 +121,27 @@ public class VideoPlayerAvtivity extends BaseActivity {
         super.onRestart();
         mVideoView.seekTo(mCurrentPosition);
         mVideoView.start();
+    }
+
+    /**
+     * 监听返回键
+     */
+    @Override
+    public void onBackPressed() {
+        //如果是横屏
+        if (getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
+            mOnBackPressedListener.backpressed();
+            return;
+        }
+        super.onBackPressed();
+    }
+
+    //返回按钮监听接口
+    private OnBackPressedListener mOnBackPressedListener;
+    public interface OnBackPressedListener {
+        void backpressed();
+    }
+    public void setOnBackPressedListener(OnBackPressedListener onBackPressedListener) {
+        this.mOnBackPressedListener = onBackPressedListener;
     }
 }

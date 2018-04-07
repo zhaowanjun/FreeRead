@@ -18,7 +18,9 @@
         </activity>
 
         <activity android:name=".ui.activity.DetailActivity"/>
-        <activity android:name=".ui.activity.VideoPlayerAvtivity"/>
+        <activity android:name=".ui.activity.VideoPlayerAvtivity"
+                  android:configChanges="keyboard|orientation|screenSize"
+                  android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
