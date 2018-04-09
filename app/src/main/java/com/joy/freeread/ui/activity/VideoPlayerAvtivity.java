@@ -5,19 +5,25 @@ import android.content.pm.ActivityInfo;
 import android.media.MediaPlayer;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.joy.freeread.R;
 import com.joy.freeread.ui.base.BaseActivity;
 import com.joy.freeread.ui.view.VideoController;
 
 import butterknife.Bind;
+import retrofit2.Retrofit;
 
 /**
  * Created by admin on 2018/4/2.
@@ -27,6 +33,8 @@ public class VideoPlayerAvtivity extends BaseActivity {
     VideoView mVideoView;
     @Bind(R.id.video_cover)
     ImageView mVideoCover;
+    @Bind(R.id.progress_bar)
+    ProgressBar mProgressBar;
     @Bind(R.id.video_frame)
     FrameLayout mVideoFrame;
     @Bind(R.id.iv_background)
@@ -47,7 +55,6 @@ public class VideoPlayerAvtivity extends BaseActivity {
     private String mFeedUrl;
     private int mVideoPortraitHeight;
     private ViewGroup.LayoutParams mVideoFramelayoutParams;
-    private Button mBtnSwitch;
 
     @Override
     protected void initView() {
@@ -67,6 +74,10 @@ public class VideoPlayerAvtivity extends BaseActivity {
     }
 
     private void initVideoInfo() {
+        //设置视频高度为宽度的9/16
+        int width = getWindowManager().getDefaultDisplay().getWidth();
+        mVideoFrame.getLayoutParams().height = width*9/16;
+
         //添加模糊背景
         Glide.with(this)
                 .load(mBlurred)
@@ -88,16 +99,17 @@ public class VideoPlayerAvtivity extends BaseActivity {
         Glide.with(this)
                 .load(mFeedUrl)
                 .into(mVideoCover);
+
         mVideoView.setVideoPath(mPlayUrl);
         VideoController videoController = new VideoController
-                (this, this, mVideoView, mVideoFramelayoutParams, mVideoPortraitHeight);
-        mBtnSwitch = (Button) videoController.findViewById(R.id.btn_switch);
+                (VideoPlayerAvtivity.this, VideoPlayerAvtivity.this, mVideoView, mVideoFramelayoutParams, mVideoPortraitHeight);
         mVideoView.setMediaController(videoController);
         //监听视频准备完成
         mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
                 mVideoCover.setVisibility(View.GONE);
+                mProgressBar.setVisibility(View.GONE);
                 mVideoView.start();
             }
         });
@@ -144,4 +156,5 @@ public class VideoPlayerAvtivity extends BaseActivity {
     public void setOnBackPressedListener(OnBackPressedListener onBackPressedListener) {
         this.mOnBackPressedListener = onBackPressedListener;
     }
+
 }

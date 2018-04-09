@@ -9,6 +9,7 @@ import com.joy.freeread.bean.zhihu.Story;
 import com.joy.freeread.bean.zhihu.TopStories;
 import com.joy.freeread.ui.activity.DetailActivity;
 import com.joy.freeread.ui.adapter.ZhihuAdapter;
+import com.joy.freeread.ui.base.BasePresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ import retrofit2.Response;
  * Created by zhaowanjun on 2017/11/22.
  */
 
-public class ZhihuPresenter extends BasePresenter{
+public class ZhihuPresenter extends BasePresenter {
 
     private ZhihuAdapter mZhihuAdapter;
     private Context mContext;

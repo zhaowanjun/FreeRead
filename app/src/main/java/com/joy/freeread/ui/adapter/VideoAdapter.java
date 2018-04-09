@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.joy.freeread.R;
 import com.joy.freeread.bean.video.DataBean;
 import com.joy.freeread.bean.video.ItemListBean;
+import com.joy.freeread.utils.ScreenUtil;
 
 import java.util.List;
 
@@ -38,6 +39,8 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         //加载布局文件
         View inflate = LayoutInflater.from(mContext).inflate(R.layout.video_item, parent, false);
+        //宽高比例16:9
+        inflate.getLayoutParams().height = ScreenUtil.instance(mContext).getScreenWidth()*9/16;
         ViewHolder viewHolder = new ViewHolder(inflate);
         inflate.setOnClickListener(this);
         inflate.setOnTouchListener(this);
@@ -52,7 +55,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
             DataBean data = mData.get(position).getData();
             String feedUrl = data.getCover().getFeed();
             //视频封面
-            Glide.with(mContext).load(feedUrl).into(holder.mVideoImage);
+            Glide.with(mContext).load(feedUrl).centerCrop().into(holder.mVideoImage);
             //视频标题
             String title = data.getTitle();
             holder.mVideoTitle.setText(title);

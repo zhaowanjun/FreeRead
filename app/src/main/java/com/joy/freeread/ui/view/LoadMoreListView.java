@@ -1,6 +1,7 @@
 package com.joy.freeread.ui.view;
 
 import android.content.Context;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.joy.freeread.R;
 import com.joy.freeread.bean.zhihu.TopStories;
+import com.joy.freeread.utils.ScreenUtil;
 
 import java.util.List;
 
@@ -45,7 +47,10 @@ public class LoadMoreListView extends ListView implements AbsListView.OnScrollLi
 
     private void initView() {
         mHeadView = (FrameLayout) LayoutInflater.from(getContext()).inflate(R.layout.item_zhihu_head, null);
-//        addHeaderView(mHeadView);
+        //在低版本系统中必须先添加HeaderView才能setAdapter，否则会崩溃
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            addHeaderView(mHeadView);
+        }
 
         mFootView = LayoutInflater.from(getContext()).inflate(R.layout.item_zhihu_foot, null);
         setOnScrollListener(this);
@@ -60,6 +65,10 @@ public class LoadMoreListView extends ListView implements AbsListView.OnScrollLi
             addHeaderView(mHeadView);
         }
         mSliderLayout = (SliderLayout) mHeadView.getChildAt(0);
+
+        //轮播图宽高比例16:9
+        mSliderLayout.getLayoutParams().height = ScreenUtil.instance(getContext()).getScreenWidth()*9/16;
+
         mSliderLayout.removeAllSliders();
         for (int i = 0; i < data.size(); i++) {
             final TopStories topStory = data.get(i);

@@ -7,7 +7,8 @@
     <FrameLayout
         android:id="@+id/video_frame"
         android:layout_width="match_parent"
-        android:layout_height="202dp">
+        android:layout_height="wrap_content"
+        android:background="@android:color/black">
 
         <VideoView
             android:id="@+id/video_view"
@@ -20,6 +21,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scaleType="fitXY"/>
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"/>
     </FrameLayout>
 
     <FrameLayout

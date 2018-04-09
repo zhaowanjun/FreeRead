@@ -84,7 +84,7 @@ public class ZhiHuFragment extends BaseFragment {
             public void run() {
                 mZhihuPresenter.getLatestNews();
             }
-        }, 2000);
+        }, 1000);
 
     }
 
@@ -99,7 +99,7 @@ public class ZhiHuFragment extends BaseFragment {
                     public void run() {
                         mZhihuPresenter.getLatestNews();
                     }
-                }, 2000);
+                }, 1000);
 
                 initDataLoadStateListener();
             }
@@ -116,7 +116,7 @@ public class ZhiHuFragment extends BaseFragment {
                     public void run() {
                         mZhihuPresenter.getMoreNews();
                     }
-                }, 2000);
+                }, 1000);
 
 
                 //加载更多完成

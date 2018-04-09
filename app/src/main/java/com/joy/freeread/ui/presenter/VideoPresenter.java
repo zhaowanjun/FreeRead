@@ -2,6 +2,8 @@ package com.joy.freeread.ui.presenter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
 import com.joy.freeread.bean.video.DataBean;
 import com.joy.freeread.bean.video.IssueListBean;
@@ -9,8 +11,10 @@ import com.joy.freeread.bean.video.ItemListBean;
 import com.joy.freeread.bean.video.Videos;
 import com.joy.freeread.ui.activity.VideoPlayerAvtivity;
 import com.joy.freeread.ui.adapter.VideoAdapter;
+import com.joy.freeread.ui.base.BasePresenter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import retrofit2.Call;
@@ -22,12 +26,36 @@ import retrofit2.Response;
  */
 public class VideoPresenter extends BasePresenter {
 
-    private final VideoAdapter mVideoAdapter;
-    private final Context mContext;
+    private VideoAdapter mVideoAdapter;
+    private Context mContext;
+    private RecyclerView mRecyclerview;
+    List<ItemListBean> data = new ArrayList<>();
+    HashMap<String, String> paramMap = new HashMap<>();
 
-    public VideoPresenter(VideoAdapter videoAdapter, Context context) {
+    public VideoPresenter(VideoAdapter videoAdapter, Context context, RecyclerView recyclerview) {
         mVideoAdapter = videoAdapter;
         mContext = context;
+        mRecyclerview = recyclerview;
+
+        initOnScrollListener();
+    }
+
+    private void initOnScrollListener() {
+        mRecyclerview.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                LinearLayoutManager layoutManager = (LinearLayoutManager) mRecyclerview.getLayoutManager();
+                //获取最后一个索引值
+                int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
+                if(data.size() > 0
+                        && newState == mRecyclerview.SCROLL_STATE_IDLE
+                        && lastVisibleItemPosition == data.size()-1) {
+                    mOnLoadMoreListener.onLoadMore();
+                }
+            }
+        });
     }
 
     public void getFirstPage() {
@@ -36,10 +64,47 @@ public class VideoPresenter extends BasePresenter {
             @Override
             public void onResponse(Call<Videos> call, Response<Videos> response) {
                 Videos videoBean = response.body();
-                List<IssueListBean> issueList = videoBean.getIssueList();
+                //得到Url链接中的参数对
+                getUrlParamMap(videoBean);
+                data.clear();
+                for (IssueListBean issueListBean : videoBean.getIssueList()) {
+                    List<ItemListBean> itemList = issueListBean.getItemList();
+                    for (int i = 2; i < itemList.size(); i++) {
+                        data.add(itemList.get(i));
+                    }
+                }
 
-                List<ItemListBean> data = new ArrayList<>();
-                for (IssueListBean issueListBean : issueList) {
+                mVideoAdapter.setData(data);
+                mVideoAdapter.notifyDataSetChanged();
+                mOnLoadCompletedListener.onLoadCompleted();
+            }
+
+            @Override
+            public void onFailure(Call<Videos> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void getUrlParamMap(Videos videoBean) {
+        paramMap.clear();
+        String nextPageUrl = videoBean.getNextPageUrl();
+        String nextPagePath = nextPageUrl.split("[?]")[1];
+        String[] paramsArr = nextPagePath.split("&");
+        for (String params : paramsArr) {
+            String[] paramKv = params.split("=");
+            paramMap.put(paramKv[0], paramKv[1]);
+        }
+    }
+
+    public void getNextPage() {
+        Call<Videos> nextPage = mVideoApi.getNextPage(paramMap.get("date"), paramMap.get("num"));
+        nextPage.enqueue(new Callback<Videos>() {
+            @Override
+            public void onResponse(Call<Videos> call, Response<Videos> response) {
+                Videos videoBean = response.body();
+                getUrlParamMap(videoBean);
+                for (IssueListBean issueListBean : videoBean.getIssueList()) {
                     List<ItemListBean> itemList = issueListBean.getItemList();
                     for (int i = 2; i < itemList.size(); i++) {
                         data.add(itemList.get(i));
@@ -57,7 +122,6 @@ public class VideoPresenter extends BasePresenter {
         });
     }
 
-
     public void openVideoPlayer(DataBean data) {
         Intent intent = new Intent(mContext, VideoPlayerAvtivity.class);
         intent.putExtra("feedUrl", data.getCover().getFeed());
@@ -67,5 +131,21 @@ public class VideoPresenter extends BasePresenter {
         intent.putExtra("slogan", data.getSlogan());
         intent.putExtra("description", data.getDescription());
         mContext.startActivity(intent);
+    }
+
+    private OnLoadCompletedListener mOnLoadCompletedListener;
+    public interface OnLoadCompletedListener {
+        void onLoadCompleted();
+    }
+    public void setOnLoadCompletedListener(OnLoadCompletedListener onLoadCompletedListener) {
+        mOnLoadCompletedListener = onLoadCompletedListener;
+    }
+
+    private OnLoadMoreListener mOnLoadMoreListener;
+    public interface OnLoadMoreListener {
+        void onLoadMore();
+    }
+    public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
+        mOnLoadMoreListener = onLoadMoreListener;
     }
 }

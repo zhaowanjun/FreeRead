@@ -1,4 +1,4 @@
-package com.joy.freeread.ui.presenter;
+package com.joy.freeread.ui.base;
 
 import com.joy.freeread.api.GankApi;
 import com.joy.freeread.api.VideoApi;
