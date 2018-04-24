@@ -1,14 +1,10 @@
 package com.joy.freeread.ui.fragment;
 
-import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.joy.freeread.R;
 import com.joy.freeread.bean.video.DataBean;
@@ -17,7 +13,6 @@ import com.joy.freeread.ui.base.BaseFragment;
 import com.joy.freeread.ui.presenter.VideoPresenter;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * Created by zhaowanjun on 2017/11/22.
@@ -31,7 +26,6 @@ public class VideoFragment extends BaseFragment {
     @Bind(R.id.refresh)
     SwipeRefreshLayout mRefresh;
     private VideoAdapter mVideoAdapter;
-    private LinearLayoutManager mLayoutManager;
     private VideoPresenter mVideoPresenter;
 
     @Override
@@ -87,8 +81,8 @@ public class VideoFragment extends BaseFragment {
     private void loadData() {
         mVideoAdapter = new VideoAdapter(getContext());
         //创建默认的线性LayoutManager
-        mLayoutManager = new LinearLayoutManager(getContext());
-        mRecyclerview.setLayoutManager(mLayoutManager);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        mRecyclerview.setLayoutManager(layoutManager);
         //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
         mRecyclerview.setHasFixedSize(true);
 
