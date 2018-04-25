@@ -7,7 +7,7 @@
         android:id="@+id/video_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/lightgery"/>
+        android:background="@color/lightgrey"/>
 
     <ImageView
         android:id="@+id/video_cover_color"

@@ -36,4 +36,5 @@ dependencies {
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.daimajia.slider:library:1.1.5@aar'
     compile 'com.android.support:cardview-v7:24.2.1'
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.3'
 }

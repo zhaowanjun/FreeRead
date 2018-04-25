@@ -66,7 +66,6 @@ public class VideoFragment extends BaseFragment {
                 mVideoPresenter.getNextPage();
             }
         });
-
     }
 
     private void initLoadCompletedListener() {
