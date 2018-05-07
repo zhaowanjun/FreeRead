@@ -65,6 +65,7 @@ public class GankPresenter extends BasePresenter {
                 mMeizhiList.addAll(results);
                 mGankAdapter.setData(mMeizhiList);
                 mGankAdapter.notifyDataSetChanged();
+                System.out.println("============"+mMeizhiList);
             }
 
             @Override
