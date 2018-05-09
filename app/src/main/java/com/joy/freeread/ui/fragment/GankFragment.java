@@ -1,15 +1,21 @@
 package com.joy.freeread.ui.fragment;
 
+import android.graphics.Color;
 import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.joy.freeread.R;
 import com.joy.freeread.bean.gank.Meizhi;
 import com.joy.freeread.ui.adapter.GankAdapter;
 import com.joy.freeread.ui.base.BaseFragment;
+import com.joy.freeread.ui.base.BasePresenter;
 import com.joy.freeread.ui.presenter.GankPresenter;
+import com.joy.freeread.utils.DensityUtil;
+import com.joy.freeread.utils.ScreenUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +29,16 @@ import butterknife.Bind;
 public class GankFragment extends BaseFragment {
     @Bind(R.id.recycler_view)
     RecyclerView mRecyclerView;
+    @Bind(R.id.refresh)
+    SwipeRefreshLayout mRefresh;
     private GankAdapter mGankAdapter;
     private GankPresenter mGankPresenter;
     private StaggeredGridLayoutManager mLayoutManager;
     private List<Meizhi.ResultsBean> data = new ArrayList<>();
+
+    //定义数据加载方式 0刷新 ；1更多
+    private final int REFRESH = 0;
+    private final int MORE = 1;
 
     @Override
     public int getLayoutId() {
@@ -35,7 +47,6 @@ public class GankFragment extends BaseFragment {
 
     @Override
     protected void initView(View view) {
-
         loadData();
         initRefreshListener();
         initLoadMoreListener();
@@ -45,6 +56,7 @@ public class GankFragment extends BaseFragment {
     }
 
     private void loadData() {
+        int width = (ScreenUtil.instance(getContext()).getScreenWidth()) / 2;
         mGankAdapter = new GankAdapter(R.layout.gank_item, data);
 
         //创建瀑布流布局管理器
@@ -55,16 +67,37 @@ public class GankFragment extends BaseFragment {
         mGankPresenter = new GankPresenter(getContext(), mRecyclerView, mGankAdapter);
         mRecyclerView.setAdapter(mGankAdapter);
 
+        mRefresh.setRefreshing(true);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                mGankPresenter.getMeiZhiData();
+                mGankPresenter.getMeiZhiData(REFRESH);
             }
         }, 1000);
+
+        View view = new View(getActivity());
+        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(1, DensityUtil.dp2px(getActivity(), 5));
+        view.setLayoutParams(layoutParams);
+        view.setBackgroundColor(Color.WHITE);
+        mGankAdapter.addHeaderView(view);
+
     }
 
     private void initRefreshListener() {
+        mRefresh.setColorSchemeColors(getResources().getColor(R.color.GankGreen));
+        mRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mGankPresenter.getMeiZhiData(MORE);
+                    }
+                }, 1000);
 
+                initLoadCompletedListener();
+            }
+        });
     }
 
     private void initLoadMoreListener() {
@@ -72,6 +105,12 @@ public class GankFragment extends BaseFragment {
     }
 
     private void initLoadCompletedListener() {
+        mGankPresenter.setDataLoadStateListener(new BasePresenter.DataLoadStateListener() {
+            @Override
+            public void dataIsLoaded() {
+                mRefresh.setRefreshing(false);
+            }
+        });
     }
 
     private void initItemClickListener() {

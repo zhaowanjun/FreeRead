@@ -28,6 +28,9 @@ public class GankPresenter extends BasePresenter {
     private List<Meizhi.ResultsBean> mMeizhiList = new ArrayList<>();
     //页码
     private int page = 0;
+    //定义数据加载方式 0刷新 ；1更多
+    private final int REFRESH = 0;
+    private final int MORE = 1;
 
     public GankPresenter(Context context, RecyclerView recyclerView, GankAdapter gankAdapter) {
         mContext = context;
@@ -56,16 +59,24 @@ public class GankPresenter extends BasePresenter {
         Call<DayData> dayData = mGankApi.getDayData(date);
     }
 
-    public void getMeiZhiData() {
-        Call<Meizhi> meiZhiCall = mGankApi.getMeiZhi(page++);
+    public void getMeiZhiData(final int loadWay) {
+        if(loadWay == REFRESH) {
+            page = 0;
+        }
+        final Call<Meizhi> meiZhiCall = mGankApi.getMeiZhi(page++);
         meiZhiCall.enqueue(new Callback<Meizhi>() {
             @Override
             public void onResponse(Call<Meizhi> call, Response<Meizhi> response) {
                 List<Meizhi.ResultsBean> results = response.body().getResults();
+                mMeizhiList.clear();
                 mMeizhiList.addAll(results);
-                mGankAdapter.setData(mMeizhiList);
-                mGankAdapter.notifyDataSetChanged();
-                System.out.println("============"+mMeizhiList);
+                if(loadWay == REFRESH) {
+                    mGankAdapter.setNewData(mMeizhiList);
+                } else {
+                    mGankAdapter.addData(mMeizhiList);
+                }
+
+                dataLoadStateListener.dataIsLoaded();
             }
 
             @Override

@@ -76,7 +76,7 @@ public class VideoPresenter extends BasePresenter {
 
                 mVideoAdapter.setData(data);
                 mVideoAdapter.notifyDataSetChanged();
-                mOnLoadCompletedListener.onLoadCompleted();
+                dataLoadStateListener.dataIsLoaded();
             }
 
             @Override
@@ -131,14 +131,6 @@ public class VideoPresenter extends BasePresenter {
         intent.putExtra("slogan", data.getSlogan());
         intent.putExtra("description", data.getDescription());
         mContext.startActivity(intent);
-    }
-
-    private OnLoadCompletedListener mOnLoadCompletedListener;
-    public interface OnLoadCompletedListener {
-        void onLoadCompleted();
-    }
-    public void setOnLoadCompletedListener(OnLoadCompletedListener onLoadCompletedListener) {
-        mOnLoadCompletedListener = onLoadCompletedListener;
     }
 
     private OnLoadMoreListener mOnLoadMoreListener;

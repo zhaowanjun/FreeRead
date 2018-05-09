@@ -10,6 +10,7 @@ import com.joy.freeread.R;
 import com.joy.freeread.bean.video.DataBean;
 import com.joy.freeread.ui.adapter.VideoAdapter;
 import com.joy.freeread.ui.base.BaseFragment;
+import com.joy.freeread.ui.base.BasePresenter;
 import com.joy.freeread.ui.presenter.VideoPresenter;
 
 import butterknife.Bind;
@@ -69,9 +70,9 @@ public class VideoFragment extends BaseFragment {
     }
 
     private void initLoadCompletedListener() {
-        mVideoPresenter.setOnLoadCompletedListener(new VideoPresenter.OnLoadCompletedListener() {
+        mVideoPresenter.setDataLoadStateListener(new BasePresenter.DataLoadStateListener() {
             @Override
-            public void onLoadCompleted() {
+            public void dataIsLoaded() {
                 mRefresh.setRefreshing(false);
             }
         });
