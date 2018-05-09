@@ -8,6 +8,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.joy.freeread.R;
 import com.joy.freeread.bean.gank.Meizhi;
 import com.joy.freeread.ui.adapter.GankAdapter;
@@ -91,7 +92,7 @@ public class GankFragment extends BaseFragment {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        mGankPresenter.getMeiZhiData(MORE);
+                        mGankPresenter.getMeiZhiData(REFRESH);
                     }
                 }, 1000);
 
@@ -101,7 +102,18 @@ public class GankFragment extends BaseFragment {
     }
 
     private void initLoadMoreListener() {
+        mGankAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                mGankPresenter.getMeiZhiData(MORE);
+            }
+        }, mRecyclerView);
 
+        View view = new View(getActivity());
+        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(1,DensityUtil.dp2px(getActivity(),5));
+        view.setLayoutParams(layoutParams);
+        view.setBackgroundColor(Color.WHITE);
+        mGankAdapter.addHeaderView(view);
     }
 
     private void initLoadCompletedListener() {

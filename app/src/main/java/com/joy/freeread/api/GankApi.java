@@ -20,6 +20,6 @@ public interface GankApi {
     @GET("day/{date}")
     Call<DayData> getDayData(@Path("date") String date);
 
-    @GET("data/福利/10/{page}")
+    @GET("data/福利/15/{page}")
     Call<Meizhi> getMeiZhi(@Path("page") int page);
 }
