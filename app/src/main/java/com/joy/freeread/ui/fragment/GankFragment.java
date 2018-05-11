@@ -1,21 +1,20 @@
 package com.joy.freeread.ui.fragment;
 
-import android.graphics.Color;
+import android.content.Intent;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.joy.freeread.R;
-import com.joy.freeread.bean.gank.Meizhi;
+import com.joy.freeread.bean.gank.MeizhiBean;
+import com.joy.freeread.ui.activity.DailyGankActivity;
 import com.joy.freeread.ui.adapter.GankAdapter;
 import com.joy.freeread.ui.base.BaseFragment;
 import com.joy.freeread.ui.base.BasePresenter;
 import com.joy.freeread.ui.presenter.GankPresenter;
-import com.joy.freeread.utils.DensityUtil;
 import com.joy.freeread.utils.ScreenUtil;
 
 import java.util.ArrayList;
@@ -35,7 +34,7 @@ public class GankFragment extends BaseFragment {
     private GankAdapter mGankAdapter;
     private GankPresenter mGankPresenter;
     private StaggeredGridLayoutManager mLayoutManager;
-    private List<Meizhi.ResultsBean> data = new ArrayList<>();
+    private List<MeizhiBean.ResultsBean> data = new ArrayList<>();
 
     //定义数据加载方式 0刷新 ；1更多
     private final int REFRESH = 0;
@@ -76,12 +75,6 @@ public class GankFragment extends BaseFragment {
             }
         }, 1000);
 
-        View view = new View(getActivity());
-        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(1, DensityUtil.dp2px(getActivity(), 5));
-        view.setLayoutParams(layoutParams);
-        view.setBackgroundColor(Color.WHITE);
-        mGankAdapter.addHeaderView(view);
-
     }
 
     private void initRefreshListener() {
@@ -108,12 +101,6 @@ public class GankFragment extends BaseFragment {
                 mGankPresenter.getMeiZhiData(MORE);
             }
         }, mRecyclerView);
-
-        View view = new View(getActivity());
-        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(1,DensityUtil.dp2px(getActivity(),5));
-        view.setLayoutParams(layoutParams);
-        view.setBackgroundColor(Color.WHITE);
-        mGankAdapter.addHeaderView(view);
     }
 
     private void initLoadCompletedListener() {
@@ -126,7 +113,13 @@ public class GankFragment extends BaseFragment {
     }
 
     private void initItemClickListener() {
-
+        mGankAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                //打开今日Gank页面
+                mGankPresenter.openDailyGank((String) view.getTag());
+            }
+        });
     }
 
     @Override

@@ -1,14 +1,10 @@
 package com.joy.freeread.ui.adapter;
 
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.DrawableTypeRequest;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -17,9 +13,8 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.joy.freeread.R;
-import com.joy.freeread.bean.gank.Meizhi;
+import com.joy.freeread.bean.gank.MeizhiBean;
 import com.joy.freeread.ui.view.ResizeableImageView;
-import com.joy.freeread.utils.ScreenUtil;
 
 import java.util.List;
 
@@ -27,22 +22,22 @@ import java.util.List;
  * Created by zhaowanjun on 2018/5/6.
  */
 
-public class GankAdapter extends BaseQuickAdapter<Meizhi.ResultsBean, BaseViewHolder> {
+public class GankAdapter extends BaseQuickAdapter<MeizhiBean.ResultsBean, BaseViewHolder> {
 
     SparseArray<Integer> heightArray = new SparseArray<>();
     private float mWidth;
     private boolean hasGetWidth;
 
-    public GankAdapter(int layoutResId, List<Meizhi.ResultsBean> data) {
+    public GankAdapter(int layoutResId, List<MeizhiBean.ResultsBean> data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder holder, Meizhi.ResultsBean item) {
-
+    protected void convert(BaseViewHolder holder, MeizhiBean.ResultsBean item) {
+        View convertView = holder.getConvertView();
         final int layoutPosition = holder.getLayoutPosition();
-        final ResizeableImageView mCardImage = (ResizeableImageView) holder.getConvertView().findViewById(R.id.card_image);
-        TextView mCardText = (TextView) holder.getConvertView().findViewById(R.id.card_text);
+        final ResizeableImageView mCardImage = (ResizeableImageView) convertView.findViewById(R.id.card_image);
+        TextView mCardText = (TextView) convertView.findViewById(R.id.card_text);
         final String url = item.getUrl();
 
         RequestManager requestManager = Glide.with(mContext);
@@ -78,5 +73,7 @@ public class GankAdapter extends BaseQuickAdapter<Meizhi.ResultsBean, BaseViewHo
         String publishedAt = item.getPublishedAt();
         String date = publishedAt.split("T")[0];
         mCardText.setText(date);
+
+        convertView.setTag(date);
     }
 }

@@ -1,16 +1,23 @@
 package com.joy.freeread.bean.gank;
 
+import android.widget.ExpandableListAdapter;
+
+import com.chad.library.adapter.base.entity.AbstractExpandableItem;
+import com.chad.library.adapter.base.entity.MultiItemEntity;
+
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by admin on 2018/4/23.
  */
-public class DayData {
+public class DailyGankBean implements Serializable {
+
 
     /**
-     * category : ["iOS","Android","瞎推荐","拓展资源","福利","休息视频"]
+     * category : ["休息视频","Android","iOS","福利","前端"]
      * error : false
-     * results : {"Android":[{"_id":"56cc6d23421aa95caa707a69","createdAt":"2015-08-06T07:15:52.65Z","desc":"类似Link Bubble的悬浮式操作设计","publishedAt":"2015-08-07T03:57:48.45Z","type":"Android","url":"https://github.com/recruit-lifestyle/FloatingView","used":true,"who":"mthli"},{"_id":"56cc6d23421aa95caa707a6f","createdAt":"2015-08-07T01:33:07.815Z","desc":"Android开发中，有哪些让你觉得相见恨晚的方法、类或接口？","publishedAt":"2015-08-07T03:57:47.317Z","type":"Android","url":"http://www.zhihu.com/question/33636939","used":true,"who":"lxxself"},{"_id":"56cc6d23421aa95caa707c69","createdAt":"2015-08-06T15:00:38.350Z","desc":"使用注解来处理Activity的状态恢复","publishedAt":"2015-08-07T03:57:48.76Z","type":"Android","url":"https://github.com/tom91136/Akatsuki","used":true,"who":"鲍永章"},{"_id":"56cc6d23421aa95caa707c71","createdAt":"2015-08-07T02:19:44.342Z","desc":"Android Lollipop联系人之PinnedListView简单使用","publishedAt":"2015-08-07T03:57:48.142Z","type":"Android","url":"https://git.oschina.net/way/PinnedHeaderListView","used":true,"who":"有时放纵"},{"_id":"56cc6d23421aa95caa707c78","createdAt":"2015-08-06T14:58:28.171Z","desc":"图片可以自动滚动的ImageView，可以实现视差效果。","publishedAt":"2015-08-07T03:57:48.73Z","type":"Android","url":"https://github.com/Q42/AndroidScrollingImageView","used":true,"who":"鲍永章"}],"iOS":[{"_id":"56cc6d1d421aa95caa707769","createdAt":"2015-08-07T01:32:51.588Z","desc":"LLVM 简介","publishedAt":"2015-08-07T03:57:48.70Z","type":"iOS","url":"http://adriansampson.net/blog/llvm.html","used":true,"who":"CallMeWhy"},{"_id":"56cc6d23421aa95caa707a6b","createdAt":"2015-08-06T14:45:18.733Z","desc":"基于TextKit的UILabel，支持超链接和自定义表达式。","publishedAt":"2015-08-07T03:57:47.242Z","type":"iOS","url":"https://github.com/molon/MLLabel","used":true,"who":"鲍永章"},{"_id":"56cc6d23421aa95caa707bea","createdAt":"2015-08-07T01:33:30.871Z","desc":"Swift 和 C 函数","publishedAt":"2015-08-07T03:57:48.83Z","type":"iOS","url":"http://chris.eidhof.nl/posts/swift-c-interop.html","used":true,"who":"CallMeWhy"},{"_id":"56cc6d23421aa95caa707c77","createdAt":"2015-08-07T01:34:00.984Z","desc":"Arrays Linked Lists 和性能比较","publishedAt":"2015-08-07T03:57:48.174Z","type":"iOS","url":"http://airspeedvelocity.net/2015/08/03/arrays-linked-lists-and-performance/","used":true,"who":"CallMeWhy"}],"休息视频":[{"_id":"56cc6d23421aa95caa707c68","createdAt":"2015-08-06T13:06:17.211Z","desc":"听到就心情大好的歌，简直妖魔哈哈哈哈哈，原地址\nhttp://v.youku.com/v_show/id_XMTQxODA5NDM2.html","publishedAt":"2015-08-07T03:57:48.104Z","type":"休息视频","url":"http://www.zhihu.com/question/21778055/answer/19905413?utm_source=weibo&utm_medium=weibo_share&utm_content=share_answer&utm_campaign=share_button","used":true,"who":"lxxself"}],"拓展资源":[{"_id":"56cc6d23421aa95caa707bdf","createdAt":"2015-08-07T01:36:06.932Z","desc":"Display GitHub code in tree format","publishedAt":"2015-08-07T03:57:48.81Z","type":"拓展资源","url":"https://github.com/buunguyen/octotree","used":true,"who":"lxxself"}],"瞎推荐":[{"_id":"56cc6d23421aa95caa707bd0","createdAt":"2015-08-07T01:52:30.267Z","desc":"程序员的电台FmM，这个页面chrome插件有问题啊哭，我写了回删除不了啊","publishedAt":"2015-08-07T03:57:48.84Z","type":"瞎推荐","url":"https://cmd.fm/","used":true,"who":"lxxself"}],"福利":[{"_id":"56cc6d23421aa95caa707c52","createdAt":"2015-08-07T01:21:06.112Z","desc":"8.7\u2014\u2014（1）","publishedAt":"2015-08-07T03:57:47.310Z","type":"福利","url":"http://ww2.sinaimg.cn/large/7a8aed7bgw1eutscfcqtcj20dw0i0q4l.jpg","used":true,"who":"张涵宇"},{"_id":"56cc6d23421aa95caa707c56","createdAt":"2015-08-07T01:21:33.518Z","desc":"8.7\u2014\u2014（2）","publishedAt":"2015-08-07T03:57:47.229Z","type":"福利","url":"http://ww2.sinaimg.cn/large/7a8aed7bgw1eutsd0pgiwj20go0p0djn.jpg","used":true,"who":"张涵宇"}]}
+     * results : {"Android":[{"_id":"5a5e0fbc421aa91154899281","createdAt":"2018-01-16T22:44:12.875Z","desc":"全面总结WebView遇到的坑及优化","publishedAt":"2018-01-23T08:46:45.132Z","source":"web","type":"Android","url":"https://www.jianshu.com/p/2b2e5d417e10","used":true,"who":"阿韦"},{"_id":"5a600bf9421aa9115b930674","createdAt":"2018-01-18T10:52:41.730Z","desc":"Android 股票图表库","publishedAt":"2018-01-23T08:46:45.132Z","source":"web","type":"Android","url":"https://github.com/donglua/JZAndroidChart","used":true,"who":"东东东鲁"},{"_id":"5a634c83421aa9115b93067c","createdAt":"2018-01-20T22:04:51.258Z","desc":"AndroidGodEye是一个可以在PC浏览器中实时监控Android数据指标（比如性能指标，但是不局限于性能）的工具，你可以通过wifi连接手机和pc，通过pc浏览器实时监控手机性能。","publishedAt":"2018-01-23T08:46:45.132Z","source":"web","type":"Android","url":"https://github.com/Kyson/AndroidGodEye","used":true,"who":"AndroidKy"},{"_id":"5a65a83f421aa91156960028","createdAt":"2018-01-22T17:00:47.798Z","desc":"WhatsNew - 自动展示更新日志的提示库","publishedAt":"2018-01-23T08:46:45.132Z","source":"web","type":"Android","url":"https://github.com/TonnyL/WhatsNew","used":true,"who":"黎赵太郎"},{"_id":"5a65a8f8421aa911577aa7e6","createdAt":"2018-01-22T17:03:52.479Z","desc":"用Lottie把启动界面动起来","publishedAt":"2018-01-23T08:46:45.132Z","source":"web","type":"Android","url":"https://mp.weixin.qq.com/s?__biz=MzIwMzYwMTk1NA==&mid=2247489401&idx=1&sn=9eecc9faa9d2dc0ce8bae6d7c45885a9","used":true,"who":"陈宇明"}],"iOS":[{"_id":"5a5f088c421aa91154899285","createdAt":"2018-01-17T16:25:48.635Z","desc":"iOS 一个异步渲染TextKit开源库","images":["http://img.gank.io/977610b0-04b5-49b3-be65-00d76389dd6d"],"publishedAt":"2018-01-23T08:46:45.132Z","source":"web","type":"iOS","url":"https://github.com/12207480/TYText","used":true,"who":"yeBlueColor"},{"_id":"5a60068f421aa91154899288","createdAt":"2018-01-18T10:29:35.552Z","desc":"基于protocol的iOS模块路由和依赖注入框架","images":["http://img.gank.io/08c2da4a-795c-48d7-b470-8ffe5dbd86c4"],"publishedAt":"2018-01-23T08:46:45.132Z","source":"web","type":"iOS","url":"https://github.com/Zuikyo/ZIKRouter","used":true,"who":"Zuik"}],"休息视频":[{"_id":"571cd54667765974f885bf75","createdAt":"2016-04-24T22:16:38.889Z","desc":"搞机番外篇：三个曲面屏环绕打LOL算不算作弊？","publishedAt":"2018-01-23T08:46:45.132Z","source":"chrome","type":"休息视频","url":"http://www.bilibili.com/video/av4416912/","used":true,"who":"LHF"}],"前端":[{"_id":"5a65aa65421aa91156960029","createdAt":"2018-01-22T17:09:57.815Z","desc":"前端每周清单第 48 期：Slack Webpack 构建优化，CSS 命名规范与用户追踪，Vue.js 单元测试","publishedAt":"2018-01-23T08:46:45.132Z","source":"web","type":"前端","url":"https://zhuanlan.zhihu.com/p/33185341","used":true,"who":"王下邀月熊(Chevalier)"}],"福利":[{"_id":"5a65381a421aa91156960022","createdAt":"2018-01-22T09:02:18.715Z","desc":"1-22","publishedAt":"2018-01-23T08:46:45.132Z","source":"chrome","type":"福利","url":"http://7xi8d6.com1.z0.glb.clouddn.com/20180122090204_A4hNiG_Screenshot.jpeg","used":true,"who":"daimajia"}]}
      */
 
     private boolean error;
@@ -41,12 +48,11 @@ public class DayData {
         this.category = category;
     }
 
-    public static class ResultsBean {
+    public static class ResultsBean extends AbstractExpandableItem implements MultiItemEntity, Serializable {
         private List<AndroidBean> Android;
         private List<IOSBean> iOS;
         private List<休息视频Bean> 休息视频;
-        private List<拓展资源Bean> 拓展资源;
-        private List<瞎推荐Bean> 瞎推荐;
+        private List<前端Bean> 前端;
         private List<福利Bean> 福利;
 
         public List<AndroidBean> getAndroid() {
@@ -73,20 +79,12 @@ public class DayData {
             this.休息视频 = 休息视频;
         }
 
-        public List<拓展资源Bean> get拓展资源() {
-            return 拓展资源;
+        public List<前端Bean> get前端() {
+            return 前端;
         }
 
-        public void set拓展资源(List<拓展资源Bean> 拓展资源) {
-            this.拓展资源 = 拓展资源;
-        }
-
-        public List<瞎推荐Bean> get瞎推荐() {
-            return 瞎推荐;
-        }
-
-        public void set瞎推荐(List<瞎推荐Bean> 瞎推荐) {
-            this.瞎推荐 = 瞎推荐;
+        public void set前端(List<前端Bean> 前端) {
+            this.前端 = 前端;
         }
 
         public List<福利Bean> get福利() {
@@ -97,22 +95,34 @@ public class DayData {
             this.福利 = 福利;
         }
 
-        public static class AndroidBean {
+        @Override
+        public int getLevel() {
+            return 0;
+        }
+
+        @Override
+        public int getItemType() {
+            return 0;
+        }
+
+        public static class AndroidBean extends AbstractExpandableItem implements MultiItemEntity, Serializable {
             /**
-             * _id : 56cc6d23421aa95caa707a69
-             * createdAt : 2015-08-06T07:15:52.65Z
-             * desc : 类似Link Bubble的悬浮式操作设计
-             * publishedAt : 2015-08-07T03:57:48.45Z
+             * _id : 5a5e0fbc421aa91154899281
+             * createdAt : 2018-01-16T22:44:12.875Z
+             * desc : 全面总结WebView遇到的坑及优化
+             * publishedAt : 2018-01-23T08:46:45.132Z
+             * source : web
              * type : Android
-             * url : https://github.com/recruit-lifestyle/FloatingView
+             * url : https://www.jianshu.com/p/2b2e5d417e10
              * used : true
-             * who : mthli
+             * who : 阿韦
              */
 
             private String _id;
             private String createdAt;
             private String desc;
             private String publishedAt;
+            private String source;
             private String type;
             private String url;
             private boolean used;
@@ -150,6 +160,14 @@ public class DayData {
                 this.publishedAt = publishedAt;
             }
 
+            public String getSource() {
+                return source;
+            }
+
+            public void setSource(String source) {
+                this.source = source;
+            }
+
             public String getType() {
                 return type;
             }
@@ -181,28 +199,42 @@ public class DayData {
             public void setWho(String who) {
                 this.who = who;
             }
+
+            @Override
+            public int getLevel() {
+                return 1;
+            }
+
+            @Override
+            public int getItemType() {
+                return 1;
+            }
         }
 
-        public static class IOSBean {
+        public static class IOSBean extends AbstractExpandableItem implements MultiItemEntity, Serializable {
             /**
-             * _id : 56cc6d1d421aa95caa707769
-             * createdAt : 2015-08-07T01:32:51.588Z
-             * desc : LLVM 简介
-             * publishedAt : 2015-08-07T03:57:48.70Z
+             * _id : 5a5f088c421aa91154899285
+             * createdAt : 2018-01-17T16:25:48.635Z
+             * desc : iOS 一个异步渲染TextKit开源库
+             * images : ["http://img.gank.io/977610b0-04b5-49b3-be65-00d76389dd6d"]
+             * publishedAt : 2018-01-23T08:46:45.132Z
+             * source : web
              * type : iOS
-             * url : http://adriansampson.net/blog/llvm.html
+             * url : https://github.com/12207480/TYText
              * used : true
-             * who : CallMeWhy
+             * who : yeBlueColor
              */
 
             private String _id;
             private String createdAt;
             private String desc;
             private String publishedAt;
+            private String source;
             private String type;
             private String url;
             private boolean used;
             private String who;
+            private List<String> images;
 
             public String get_id() {
                 return _id;
@@ -236,6 +268,14 @@ public class DayData {
                 this.publishedAt = publishedAt;
             }
 
+            public String getSource() {
+                return source;
+            }
+
+            public void setSource(String source) {
+                this.source = source;
+            }
+
             public String getType() {
                 return type;
             }
@@ -267,25 +307,44 @@ public class DayData {
             public void setWho(String who) {
                 this.who = who;
             }
+
+            public List<String> getImages() {
+                return images;
+            }
+
+            public void setImages(List<String> images) {
+                this.images = images;
+            }
+
+            @Override
+            public int getLevel() {
+                return 1;
+            }
+
+            @Override
+            public int getItemType() {
+                return 1;
+            }
         }
 
-        public static class 休息视频Bean {
+        public static class 休息视频Bean extends AbstractExpandableItem implements MultiItemEntity, Serializable {
             /**
-             * _id : 56cc6d23421aa95caa707c68
-             * createdAt : 2015-08-06T13:06:17.211Z
-             * desc : 听到就心情大好的歌，简直妖魔哈哈哈哈哈，原地址
-             http://v.youku.com/v_show/id_XMTQxODA5NDM2.html
-             * publishedAt : 2015-08-07T03:57:48.104Z
+             * _id : 571cd54667765974f885bf75
+             * createdAt : 2016-04-24T22:16:38.889Z
+             * desc : 搞机番外篇：三个曲面屏环绕打LOL算不算作弊？
+             * publishedAt : 2018-01-23T08:46:45.132Z
+             * source : chrome
              * type : 休息视频
-             * url : http://www.zhihu.com/question/21778055/answer/19905413?utm_source=weibo&utm_medium=weibo_share&utm_content=share_answer&utm_campaign=share_button
+             * url : http://www.bilibili.com/video/av4416912/
              * used : true
-             * who : lxxself
+             * who : LHF
              */
 
             private String _id;
             private String createdAt;
             private String desc;
             private String publishedAt;
+            private String source;
             private String type;
             private String url;
             private boolean used;
@@ -323,6 +382,14 @@ public class DayData {
                 this.publishedAt = publishedAt;
             }
 
+            public String getSource() {
+                return source;
+            }
+
+            public void setSource(String source) {
+                this.source = source;
+            }
+
             public String getType() {
                 return type;
             }
@@ -354,24 +421,36 @@ public class DayData {
             public void setWho(String who) {
                 this.who = who;
             }
+
+            @Override
+            public int getLevel() {
+                return 1;
+            }
+
+            @Override
+            public int getItemType() {
+                return 1;
+            }
         }
 
-        public static class 拓展资源Bean {
+        public static class 前端Bean extends AbstractExpandableItem implements MultiItemEntity, Serializable {
             /**
-             * _id : 56cc6d23421aa95caa707bdf
-             * createdAt : 2015-08-07T01:36:06.932Z
-             * desc : Display GitHub code in tree format
-             * publishedAt : 2015-08-07T03:57:48.81Z
-             * type : 拓展资源
-             * url : https://github.com/buunguyen/octotree
+             * _id : 5a65aa65421aa91156960029
+             * createdAt : 2018-01-22T17:09:57.815Z
+             * desc : 前端每周清单第 48 期：Slack Webpack 构建优化，CSS 命名规范与用户追踪，Vue.js 单元测试
+             * publishedAt : 2018-01-23T08:46:45.132Z
+             * source : web
+             * type : 前端
+             * url : https://zhuanlan.zhihu.com/p/33185341
              * used : true
-             * who : lxxself
+             * who : 王下邀月熊(Chevalier)
              */
 
             private String _id;
             private String createdAt;
             private String desc;
             private String publishedAt;
+            private String source;
             private String type;
             private String url;
             private boolean used;
@@ -409,90 +488,12 @@ public class DayData {
                 this.publishedAt = publishedAt;
             }
 
-            public String getType() {
-                return type;
+            public String getSource() {
+                return source;
             }
 
-            public void setType(String type) {
-                this.type = type;
-            }
-
-            public String getUrl() {
-                return url;
-            }
-
-            public void setUrl(String url) {
-                this.url = url;
-            }
-
-            public boolean isUsed() {
-                return used;
-            }
-
-            public void setUsed(boolean used) {
-                this.used = used;
-            }
-
-            public String getWho() {
-                return who;
-            }
-
-            public void setWho(String who) {
-                this.who = who;
-            }
-        }
-
-        public static class 瞎推荐Bean {
-            /**
-             * _id : 56cc6d23421aa95caa707bd0
-             * createdAt : 2015-08-07T01:52:30.267Z
-             * desc : 程序员的电台FmM，这个页面chrome插件有问题啊哭，我写了回删除不了啊
-             * publishedAt : 2015-08-07T03:57:48.84Z
-             * type : 瞎推荐
-             * url : https://cmd.fm/
-             * used : true
-             * who : lxxself
-             */
-
-            private String _id;
-            private String createdAt;
-            private String desc;
-            private String publishedAt;
-            private String type;
-            private String url;
-            private boolean used;
-            private String who;
-
-            public String get_id() {
-                return _id;
-            }
-
-            public void set_id(String _id) {
-                this._id = _id;
-            }
-
-            public String getCreatedAt() {
-                return createdAt;
-            }
-
-            public void setCreatedAt(String createdAt) {
-                this.createdAt = createdAt;
-            }
-
-            public String getDesc() {
-                return desc;
-            }
-
-            public void setDesc(String desc) {
-                this.desc = desc;
-            }
-
-            public String getPublishedAt() {
-                return publishedAt;
-            }
-
-            public void setPublishedAt(String publishedAt) {
-                this.publishedAt = publishedAt;
+            public void setSource(String source) {
+                this.source = source;
             }
 
             public String getType() {
@@ -526,24 +527,36 @@ public class DayData {
             public void setWho(String who) {
                 this.who = who;
             }
+
+            @Override
+            public int getLevel() {
+                return 1;
+            }
+
+            @Override
+            public int getItemType() {
+                return 1;
+            }
         }
 
-        public static class 福利Bean {
+        public static class 福利Bean extends AbstractExpandableItem implements MultiItemEntity, Serializable {
             /**
-             * _id : 56cc6d23421aa95caa707c52
-             * createdAt : 2015-08-07T01:21:06.112Z
-             * desc : 8.7——（1）
-             * publishedAt : 2015-08-07T03:57:47.310Z
+             * _id : 5a65381a421aa91156960022
+             * createdAt : 2018-01-22T09:02:18.715Z
+             * desc : 1-22
+             * publishedAt : 2018-01-23T08:46:45.132Z
+             * source : chrome
              * type : 福利
-             * url : http://ww2.sinaimg.cn/large/7a8aed7bgw1eutscfcqtcj20dw0i0q4l.jpg
+             * url : http://7xi8d6.com1.z0.glb.clouddn.com/20180122090204_A4hNiG_Screenshot.jpeg
              * used : true
-             * who : 张涵宇
+             * who : daimajia
              */
 
             private String _id;
             private String createdAt;
             private String desc;
             private String publishedAt;
+            private String source;
             private String type;
             private String url;
             private boolean used;
@@ -581,6 +594,14 @@ public class DayData {
                 this.publishedAt = publishedAt;
             }
 
+            public String getSource() {
+                return source;
+            }
+
+            public void setSource(String source) {
+                this.source = source;
+            }
+
             public String getType() {
                 return type;
             }
@@ -611,6 +632,16 @@ public class DayData {
 
             public void setWho(String who) {
                 this.who = who;
+            }
+
+            @Override
+            public int getLevel() {
+                return 1;
+            }
+
+            @Override
+            public int getItemType() {
+                return 1;
             }
         }
     }
