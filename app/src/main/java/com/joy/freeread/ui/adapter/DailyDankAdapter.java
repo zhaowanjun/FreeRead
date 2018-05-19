@@ -62,45 +62,53 @@ public class DailyDankAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity,
                 });
                 break;
             case 1:
+                String title = "";
                 String desc = null;
                 String url = null;
                 List<String> imageUrls = null;
 
                 if (item.getClass() == AndroidBean.class) {
                     AndroidBean item1 = (AndroidBean) item;
+                    title = "Android" ;
                     desc = item1.getDesc();
                     url = item1.getUrl();
                     imageUrls = item1.getImages();
 
                 } else if (item.getClass() == AppBean.class) {
                     AppBean item1 = (AppBean) item;
+                    title = "APP" ;
                     desc = item1.getDesc();
                     url = item1.getUrl();
                     imageUrls = item1.getImages();
 
                 } else if (item.getClass() == IOSBean.class) {
                     IOSBean item1 = (IOSBean) item;
+                    title = "IOS" ;
                     desc = item1.getDesc();
                     url = item1.getUrl();
                     imageUrls = item1.getImages();
 
                 } else if (item.getClass() == 休息视频Bean.class) {
                     休息视频Bean item1 = (休息视频Bean) item;
+                    title = "休息视频" ;
                     url = item1.getUrl();
                     desc = item1.getDesc();
 
                 } else if (item.getClass() == 前端Bean.class) {
                     前端Bean item1 = (前端Bean) item;
+                    title = "前端" ;
                     desc = item1.getDesc();
                     url = item1.getUrl();
 
                 } else if (item.getClass() == 拓展资源Bean.class) {
                     拓展资源Bean item1 = (拓展资源Bean) item;
+                    title = "拓展资源" ;
                     desc = item1.getDesc();
                     url = item1.getUrl();
 
                 } else if (item.getClass() == 瞎推荐Bean.class) {
                     瞎推荐Bean item1 = (瞎推荐Bean) item;
+                    title = "瞎推荐" ;
                     desc = item1.getDesc();
                     url = item1.getUrl();
                 }
@@ -112,13 +120,17 @@ public class DailyDankAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity,
                 helper.setText(R.id.text, desc);
                 helper.setGifDrawable(mContext, R.id.ll_image_container, imageUrls);
 
+                final String t = title;
+                final String d = desc;
                 final String u = url;
                 helper.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         //点击条目，跳转webview界面
                         Intent intent = new Intent(mContext, GankWebActivity.class);
+                        intent.putExtra("title", t);
                         intent.putExtra("url", u);
+                        intent.putExtra("desc", d);
                         mContext.startActivity(intent);
                     }
                 });
