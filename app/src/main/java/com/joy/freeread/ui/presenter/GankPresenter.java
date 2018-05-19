@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import com.joy.freeread.bean.gank.DailyGankBean;
 import com.joy.freeread.bean.gank.MeizhiBean;
 import com.joy.freeread.ui.activity.DailyGankActivity;
-import com.joy.freeread.ui.activity.VideoPlayerAvtivity;
 import com.joy.freeread.ui.adapter.GankAdapter;
 import com.joy.freeread.ui.base.BasePresenter;
 
@@ -68,7 +67,6 @@ public class GankPresenter extends BasePresenter {
 
     public void openDailyGank(String date) {
         date = date.replace('-', '/');
-        mContext.startActivity(new Intent(mContext, DailyGankActivity.class));
         Call<DailyGankBean> dailyGank = mGankApi.getDailyGank(date);
         dailyGank.enqueue(new Callback<DailyGankBean>() {
             @Override

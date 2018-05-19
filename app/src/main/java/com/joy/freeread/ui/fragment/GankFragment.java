@@ -66,6 +66,8 @@ public class GankFragment extends BaseFragment {
 
         mGankPresenter = new GankPresenter(getContext(), mRecyclerView, mGankAdapter);
         mRecyclerView.setAdapter(mGankAdapter);
+        //一行代码开启动画 默认CUSTOM动画
+        mGankAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
 
         mRefresh.setRefreshing(true);
         new Handler().postDelayed(new Runnable() {
@@ -116,7 +118,7 @@ public class GankFragment extends BaseFragment {
         mGankAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                //打开今日Gank页面
+                //打开每日干货页面
                 mGankPresenter.openDailyGank((String) view.getTag());
             }
         });

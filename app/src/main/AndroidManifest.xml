@@ -19,8 +19,13 @@
 
         <activity android:name=".ui.activity.DetailActivity"
                   android:screenOrientation="portrait"/>
+
         <activity android:name=".ui.activity.DailyGankActivity"
                   android:screenOrientation="portrait"/>
+
+        <activity android:name=".ui.activity.GankWebActivity"
+                  android:screenOrientation="portrait"/>
+
         <activity android:name=".ui.activity.VideoPlayerAvtivity"
                   android:configChanges="keyboard|orientation|screenSize"
                   android:screenOrientation="portrait"/>
