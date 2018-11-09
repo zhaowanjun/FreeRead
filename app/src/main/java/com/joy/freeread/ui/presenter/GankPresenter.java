@@ -60,7 +60,7 @@ public class GankPresenter extends BasePresenter {
 
             @Override
             public void onFailure(Call<MeizhiBean> call, Throwable t) {
-
+                System.out.println("=======失败:"+t);
             }
         });
     }

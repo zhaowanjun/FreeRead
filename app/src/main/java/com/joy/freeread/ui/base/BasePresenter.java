@@ -1,5 +1,6 @@
 package com.joy.freeread.ui.base;
 
+import com.joy.freeread.MyApplication;
 import com.joy.freeread.api.GankApi;
 import com.joy.freeread.api.VideoApi;
 import com.joy.freeread.api.ZhihuApi;
@@ -20,6 +21,7 @@ public abstract class BasePresenter {
     protected VideoApi mVideoApi;
 
     public BasePresenter() {
+
         Retrofit zhihuRetrofit = new Retrofit.Builder()
                 .baseUrl(ZHIHU_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -28,6 +30,7 @@ public abstract class BasePresenter {
         Retrofit gankRetrofit = new Retrofit.Builder()
                 .baseUrl(GANK_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
+                .client(MyApplication.getOkHttpClient())
                 .build();
 
         Retrofit videoRetrofit = new Retrofit.Builder()
